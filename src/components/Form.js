@@ -43,7 +43,7 @@ const [formValues, setFormValues] = useState({userName: '', password: ''});
   return (
     <>
       <div className="authentication">
-      <h1 className="c">Введите логин и пароль</h1>
+      <h1 className="text">Введите логин и пароль</h1>
         <form action="#" id='auth'>
             <input type="text" onChange={event=>inputChangeHandler(event)} name="userName" placeholder="Email"/>
             <input type="text" onChange={event=>inputChangeHandler(event)} name="password" placeholder="Password"/>

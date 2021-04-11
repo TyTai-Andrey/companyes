@@ -127,7 +127,9 @@ function getHouse (company,page,perPage) {
   }
 
   function exit () {
-    setAuth(false)
+    setAuth(false);
+    localStorage.removeItem('access');
+    localStorage.removeItem('refresh')
   }
 
 
@@ -152,13 +154,13 @@ function getHouse (company,page,perPage) {
       <section className="main">
         {
           (auth) ? 
-          <div className="cl">
+          <div className="selectCompany">
             <select name="companyes" id="companyes" onClick={event=>getHouse(event.target, 1, 1)}>
                 { 
-                  (dataCompany)? dataCompany.map((i,index)=><option key={i.id} value={i.id} >{i.name}</option>) : null } 
-                }
+                  (dataCompany)? dataCompany.map((i,index)=><option key={i.id} value={i.id} >{i.name}</option>) : null 
+                } 
             </select>
-            <div className="faf">
+            <div className="flat">
 
               {
                 house.map((i)=> <div key={i.id}><p>{i.address}</p><p>{i.reestrFlatCount}</p><p>{i.createdAt}</p></div>)
@@ -167,19 +169,22 @@ function getHouse (company,page,perPage) {
 
              
             </div>
+        
           </div> : <h1>Необходимо зарегистрироваться</h1>
         }
-
-        <ul className="row">
+         {
+          (auth) ?    <ul className="row">
           <li onClick={()=>getHouse({value: house[0].company}, 1, 1)}>1</li>
-          {
+            {
 
-            arr.map((i, index) => {
-              if (index+1 > housesInfo.currentPage && index+1 <= housesInfo.currentPage+5) {return <li onClick={()=>getHouse({value: house[0].company}, index+1, 1)}>{index+1}</li>} 
-              if (index+1 == housesInfo.lastPage) { return <><li>. . .</li><li onClick={()=>getHouse({value: house[0].company}, index+1, 1)}>{index+1}</li></>} 
-            })
-          }
-        </ul>
+              arr.map((i, index) => {
+                if (index+1 > housesInfo.currentPage && index+1 <= housesInfo.currentPage+5) {return <li key={`flat${index}`} onClick={()=>getHouse({value: house[0].company}, index+1, 1)}>{index+1}</li>} 
+                if (index+1 == housesInfo.lastPage) { return <><li key={`flat-1`}>. . .</li><li key={`flat${index}`} onClick={()=>getHouse({value: house[0].company}, index+1, 1)}>{index+1}</li></>} 
+              })
+            }
+        </ul> 
+        : null 
+      } 
 
       </section>
 
